@@ -10,11 +10,18 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Маршрут для установки языка
+Route::get('setlocale/{lang}', 'SetLocaleController@setLocale')->name('setlocale');
+// Маршрут для главной страницы  без установки языка
+Route::get('/', function () {
+    return redirect('/'. App\Http\Middleware\Locale::$mainLanguage);
+});
+
 /*
-|---------------------------
+|------------------------------
 | Маршруты с локалищацией
-|---------------------------
- */
+|------------------------------
+*/
 Route::group(['prefix' => \App\Http\Middleware\Locale::getLocale()], function (){
 
     Route::get('/', function () {
@@ -23,18 +30,6 @@ Route::group(['prefix' => \App\Http\Middleware\Locale::getLocale()], function ()
 
     Auth::routes();
 
-    Route::get('/home/', 'HomeController@index', function ()
-    {
-    })->name('home');
+    Route::get('/home/', 'HomeController@index')->name('home');
 });
 
-//
-//Route::get('/setlocale/{locale}', function ($locale) {
-//
-//    if (in_array($locale, \Config::get('app.locales'))) {   # Проверяем, что у пользователя выбран доступный язык
-//        Session::put('locale', $locale);                    # И устанавливаем его в сессии под именем locale
-//    }
-//
-//    return redirect()->back();                              # Редиректим его <s>взад</s> на ту же страницу
-//
-//});

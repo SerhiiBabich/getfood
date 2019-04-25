@@ -67,6 +67,8 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                            <a href="<?= route('setlocale', ['lang' => 'en']) ?>">English</a>
+                            <a href="<?= route('setlocale', ['lang' => 'ru']) ?>" type="">Русский</a>
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
@@ -81,7 +83,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel {{ __('lang.welcome') }}
+                    {{ trans('welcome.welcome') }}
                 </div>
 
                 <div class="links">
