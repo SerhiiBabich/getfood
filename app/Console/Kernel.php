@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Console;
 
@@ -22,7 +23,7 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule) : void
     {
         $schedule->command('disposable:update')->weekly();
     }

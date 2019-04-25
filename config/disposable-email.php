@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | JSON Source URL
@@ -14,7 +13,6 @@ return [
     | a free service, so there are no uptime or support guarantees.
     |
     */
-
     'source' => 'https://rawgit.com/andreis/disposable-email-domains/master/domains.json',
 
     /*
@@ -27,7 +25,6 @@ return [
     | place for storing the list is in the framework's own storage path.
     |
     */
-
     'storage' => storage_path('framework/disposable_domains.json'),
 
     /*
@@ -43,7 +40,6 @@ return [
     | cache key as desired.
     |
     */
-
     'cache' => [
         'enabled' => true,
         'store' => 'default',
