@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Http\Controllers\Auth;
 
@@ -13,6 +14,7 @@ class GoogleLoginController extends Controller
 {
     /**
      * Create redirect to google api
+     *
      * @return void
      */
     public function redirect()
@@ -27,7 +29,6 @@ class GoogleLoginController extends Controller
      */
     public function callback()
     {
-        try {
             $googleUser = Socialite::driver('google')->user();
             $existUser = User::where('email', $googleUser->email)->first();
 
@@ -43,9 +44,6 @@ class GoogleLoginController extends Controller
                 Auth::login($user);
                 return redirect()->route('home');
             }
-        } catch (Exception $e) {
-            return 'error';
-        }
     }
 
 }
