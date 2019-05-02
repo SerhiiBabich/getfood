@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Socialite;
 use App\Models\User;
 use Auth;
-use Exception;
+use Illuminate\Http\Response;
 
 class GoogleLoginController extends Controller
 {
@@ -17,7 +17,7 @@ class GoogleLoginController extends Controller
      *
      * @return void
      */
-    public function redirect()
+    public function redirect(): void
     {
         return Socialite::driver('google')->redirect();
     }
@@ -27,7 +27,7 @@ class GoogleLoginController extends Controller
      *
      * @return void
      */
-    public function registration()
+    public function registration(): void
     {
         return Socialite::driver('google')->redirect();
     }
@@ -35,9 +35,10 @@ class GoogleLoginController extends Controller
     /**
      * Return a callback from google api.
      * Create and login user.
+     *
      * @return collback URL from google
      */
-    public function callback()
+    public function callback(): Response
     {
             $googleUser = Socialite::driver('google')->user();
             $existUser = User::where('email', $googleUser->email)->first();
