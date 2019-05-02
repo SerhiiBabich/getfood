@@ -13,11 +13,21 @@ use Exception;
 class GoogleLoginController extends Controller
 {
     /**
-     * Create redirect to google api
+     * Create redirect to google api from auth form
      *
      * @return void
      */
     public function redirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Create redirect to google api from registration form
+     *
+     * @return void
+     */
+    public function registration()
     {
         return Socialite::driver('google')->redirect();
     }
@@ -32,7 +42,7 @@ class GoogleLoginController extends Controller
             $googleUser = Socialite::driver('google')->user();
             $existUser = User::where('email', $googleUser->email)->first();
 
-            if ($existUser) {
+            if ($existUser !== null) {
                 Auth::login($existUser);
                 return redirect()->route('home');
             } else {
