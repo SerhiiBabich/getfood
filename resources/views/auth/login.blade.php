@@ -65,6 +65,21 @@
                             </div>
                         </div>
                     </form>
+
+                </div>
+            </div>
+            <br>
+            <div class="card">
+                <div class="card-header">Password generator</div>
+                <div class="card-body">
+                    <form method="POST" action="{{ route('password-generator') }}">
+                        @csrf
+                        <div class="col-md-12">
+                            <label for="password_lenth">Enter password lenth</label>
+                            <input id="password_lenth" name="password_lenth" type="text" value="6-12">
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>
