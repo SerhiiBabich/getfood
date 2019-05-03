@@ -1,41 +1,39 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\Locale;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Redirect;
 
 class SetLocaleController extends Controller
 {
-    public function setLocale(Request $request)
+    // Set language of application
+    public function setLocale(Request $request) : RedirectResponse
     {
-        $lang = $request->lang; //параметр с маршрута 'setlocale/{lang}'
+        $lang = $request->lang; // route parameters 'setlocale/{lang}'
 
-        $referer = Redirect::back()->getTargetUrl(); //URL предыдущей страницы
-        $parse_url = parse_url($referer, PHP_URL_PATH); //URI предыдущей страницы
+        $referer = Redirect::back()->getTargetUrl(); // Previous page URL
+        $parse_url = parse_url($referer, PHP_URL_PATH); // URI previous page
 
-        //разбиваем на массив по разделителю
+        // we divide into an array on a separator
         $segments = explode('/', $parse_url);
 
-        //Если URL (где нажали на переключение языка) содержал корректную метку языка
-        if (in_array($segments[1], Locale::$languages)) {
+        // if the URL (where the language switch was clicked) contained the correct language label
+        if (in_array($segments[1], Locale::$languages))  unset($segments[1]) ; // remove tag
 
-            unset($segments[1]); //удаляем метку
-        }
-
-        //Добавляем метку языка в URL (если выбран не язык по-умолчанию)
-        if ($lang != Locale::$mainLanguage){
-            array_splice($segments, 1, 0, $lang);
-        }
-
-        //формируем полный URL
+        // Add a language label to the URL (if you choose a non-default language)
+        if ($lang != Locale::$mainLanguage) array_splice($segments, 1, 0, $lang);
+        
+        // we form full URL
         $url = $request->root().implode("/", $segments);
 
-        //если были еще GET-параметры - добавляем их
+        // if there were still GET parameters - add them
         if(parse_url($referer, PHP_URL_QUERY)){
             $url = $url.'?'. parse_url($referer, PHP_URL_QUERY);
         }
-        return redirect($url); //Перенаправляем назад на ту же страницу
+        return redirect($url); // Redirect back to the same page.
     }
 }

@@ -1,58 +1,42 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
 use App;
 use Closure;
-use Session;
 use Request;
-use Lang;
-
 
 class Locale
 {
-    public static $mainLanguage = 'ru'; // основной язык, который не должен отображаться в URI
-    public static $languages = ['en', 'ru']; // языки которые будут использоватся в приложении.
-
-
+    public static $mainLanguage = 'ru'; // main language that should not be displayed in a URI
+    public static $languages = ['en', 'ru']; // languages to be used in the application.
+    private static $displayLanguageURI = true;   // display the main language in the application
+    
     /**
-     * Проверяем наличие корректной метки языка
-     * Возвращает метку или значеие null, если нет метки
+     * Check for the presence of the correct language label
+     * Returns a label or a null value if there is no label
      *
      */
-    public static function getLocale()
+    public static function getLocale() : string
     {
-        /** Если пользователь уже был на нашем сайте,
-         *  то в сессии будет значение выбранного им языка.
-         */
-//        $raw_locale = Session::get('locale');
-//        // Проверяем, что у пользователя в сессии установлен доступный язык
-//        if (!empty($raw_locale) && in_array($raw_locale, self::$languages)) {
-//
-//            //            if ($raw_locale != self::$mainLanguage) return $raw_locale; // Если нужно чтобы осн. язык не отображался в URL добавить эту проверку
-//            return $raw_locale;
-//        }else{
-//            return self::$mainLanguage;
-//        }
+        $uri = Request::path(); // get URI
 
+        $segmentsURI = explode('/',$uri); // divide by parts by separator "/"
 
-        $uri = Request::path(); // получаем URI
-
-        $segmentsURI = explode('/',$uri); // делим на части по разделителю "/"
-
-        //Проверяем метку языка  - есть ли она среди доступных языков
+        // Check the language label - is it among the available languages
         if (!empty($segmentsURI[0]) && in_array($segmentsURI[0], self::$languages))
         {
-//            if ($segmentsURI[0] != self::$mainLanguage) return $segmentsURI[0];; // Если нужно чтобы осн. язык не отображался в URL добавить эту проверку
-            return $segmentsURI[0]; //Если нужно чтобы осн. язык отображался
+            if(self::$displayLanguageURI) return $segmentsURI[0];
+            if($segmentsURI[0] != self::$mainLanguage) return $segmentsURI[0] ;
+            return '';
         }else{
-//            return null; //Если нужно чтобы осн. язык не отображался в URI
-            return self::$mainLanguage; //Если нужно чтобы осн. язык отображался в URI
+            $language = self::$displayLanguageURI ? self::$mainLanguage: '';
+            return $language;
         }
-
     }
     
-    /** Устанавливает язык приложения в зависимости от метки языка из URI
+    /** Sets the application language depending on the language label from the URI
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -61,11 +45,10 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-
         $locale = self::getLocale();
 
         if($locale) App::setLocale($locale);
-        //если метки нет - устанавливаем основной язык $mainLanguage
+        //if there are no tags, set the main language $mainLanguage
         else App::setLocale(self::$mainLanguage);
 
         return $next($request);
