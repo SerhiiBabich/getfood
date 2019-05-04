@@ -29,11 +29,10 @@ class Locale
         {
             if(self::$displayLanguageURI) return $segmentsURI[0];
             if($segmentsURI[0] != self::$mainLanguage) return $segmentsURI[0] ;
-            return '';
         }else{
-            $language = self::$displayLanguageURI ? self::$mainLanguage: '';
-            return $language;
+            if(self::$displayLanguageURI) return self::$mainLanguage;
         }
+        return '';
     }
     
     /** Sets the application language depending on the language label from the URI
