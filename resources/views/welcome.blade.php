@@ -21,7 +21,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 96vh;
             }
 
             .flex-center {
@@ -61,6 +61,10 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+            .bottom-right {
+                display: flex;
+                justify-content: flex-end;
+            }
         </style>
     </head>
     <body>
@@ -70,10 +74,10 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}">{{ __('welcome.login') }}</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">{{ __('welcome.register') }}</a>
                         @endif
                     @endauth
                 </div>
@@ -81,7 +85,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    {{ trans('welcome.welcome') }}
                 </div>
 
                 <div class="links">
@@ -95,5 +99,9 @@
                 </div>
             </div>
         </div>
+            <div class="links bottom-right">
+                <a href="<?= route('setlocale', ['lang' => 'en']) ?>" role="button">En</a>
+                <a href="<?= route('setlocale', ['lang' => 'ru']) ?>" role="button">Ru</a>
+            </div>
     </body>
 </html>
