@@ -19,4 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/password-generator', 'Auth/RegisterController@create')->name('password-generator');
+Route::post('/password-generator', 'Auth\RegisterController@generatePassword')->name('password-generator');
