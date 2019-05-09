@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Validator as Validation;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Business\Password\Generator;
 
 class RegisterController extends Controller
 {
@@ -76,4 +77,5 @@ class RegisterController extends Controller
     {
         //
     }
+
 }
