@@ -10,19 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Маршрут для установки языка
-Route::get('setlocale/{lang}', 'SetLocaleController@setLocale')->name('setlocale');
-// Маршрут для главной страницы  без установки языка
+
+// Route to set the language
+Route::get('setlocale/{lang}', 'Business\Location\SetLocale@setLocale')->name('setlocale');
+
+// The route for the main page without installing language
 Route::get('/', function () {
-    return redirect('/'. App\Http\Middleware\Locale::$mainLanguage);
+    return redirect('/'. config('app.locale'));
 });
 
 /*
 |------------------------------
-| Маршруты с локалищацией
+| Routes with localization
 |------------------------------
 */
-Route::group(['prefix' => \App\Http\Middleware\Locale::getLocale()], function (){
+Route::group(['prefix' => \App\Http\Controllers\Business\Location\GetLocale::getLocale()], function (){
 
     Route::get('/', function () {
         return view('welcome');

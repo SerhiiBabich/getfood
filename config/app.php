@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'GetFood'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://getfood'),
+    'url' => env('APP_URL', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -84,6 +84,31 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Application Languages Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Application languages that are used by default. You can set this value
+    | to any languages that will be supported by the application and that
+    | it matches any language folder provided through your application.
+    |
+    */
+    'locales' => ['ru', 'en'],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Show main application language in URL
+    |--------------------------------------------------------------------------
+    |
+    | Show the main of the language of the application in the URL that is
+    | installed in Application Locale Configuration, the default is true.
+    | You can set this value to false, then your primary language will
+    | not be displayed in the URL
+    |
+    */
+    'language_url' => env('LANGUAGE_URL', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |
@@ -93,7 +118,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'ru',
+    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
