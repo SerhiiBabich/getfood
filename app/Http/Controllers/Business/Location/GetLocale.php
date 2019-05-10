@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Business\Location;
 
@@ -12,7 +13,7 @@ class GetLocale
      */
     private static function getMainLanguage() : string
     {
-         return config('app.locale');
+        return (string) config('app.locale');
     }
 
     /** Languages that are used in the application.
@@ -39,7 +40,7 @@ class GetLocale
      */
     private static function showLanguageURL() : bool
     {
-        return config('app.language_url');
+        return (bool) config('app.language_url');
     }
 
     /**
