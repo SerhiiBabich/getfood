@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 
 use App;
 use Closure;
+use App\Http\Controllers\Business\Location\GetLocale;
 
 class Locale
 {
@@ -17,7 +18,7 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-        $locale = App\Http\Controllers\Business\Location\GetLocale::getLocale();
+        $locale = GetLocale::getLocale();
 
         if($locale) App::setLocale($locale);
         //if there are no tags, set the main language $mainLanguage

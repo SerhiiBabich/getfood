@@ -6,9 +6,6 @@ use Request;
 
 class GetLocale
 {
-    public static $languages = ['en', 'ru']; // languages to be used in the application.
-    private static $displayLanguageURI = true;   // display the main language in the application
-
     /** Main language in application
      *
      * @return string
@@ -36,6 +33,10 @@ class GetLocale
         return $segmentsURI[0];
     }
 
+    /** Show main application language in URL
+     *
+     * @return bool
+     */
     private static function showLanguageURL() : bool
     {
         return config('app.language_url');
@@ -49,7 +50,6 @@ class GetLocale
      */
     public static function getLocale() : string
     {
-//        dd(self::showLanguageURL());
         $mainLanguage = self::getMainLanguage();
         $segmentsURI = self::localeSegmentsUri();
 
