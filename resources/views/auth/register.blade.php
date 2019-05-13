@@ -91,26 +91,34 @@
                             <label for="name" class="col-md-4 col-form-label text-md-right">Password Lenth</label>
 
                             <div class="col-md-2">
-                                <input id="password_lenth" type="text" class="form-control" name="password_lenth" value="6">
+                                <input id="password_length" type="text" class="form-control" name="password_length" value="{{
+                                $passwordLength ? $passwordLength : 6
+                                }}">
+
+                                @if ($errors->has('password_length'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password_length') }}</strong>
+                                    </span>
+                                @endif
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="capital" name="capital_letters" checked>
+                                <input type="checkbox" class="form-check-input" id="capital" name="uppercase" checked>
                                 <label class="form-check-label" for="materialInline1">A-Z</label>
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="letters" name="letters" checked>
+                                <input type="checkbox" class="form-check-input" id="letters" name="lowercase" checked>
                                 <label class="form-check-label" for="materialInline2">a-z</label>
                             </div>
 
                             <div class="form-check form-check-inline">
                                 <input type="checkbox" class="form-check-input" id="numbers" name="numbers" checked>
-                                <label class="form-check-label" for="materialInline3">1-9</label>
+                                <label class="form-check-label" for="materialInline3">0-9</label>
                             </div>
 
                             <div class="form-check form-check-inline">
-                                <input type="checkbox" class="form-check-input" id="special" name="special" checked>
+                                <input type="checkbox" class="form-check-input" id="special" name="symbols" checked>
                                 <label class="form-check-label" for="materialInline3">#$*@!</label>
                             </div>
                         </div>

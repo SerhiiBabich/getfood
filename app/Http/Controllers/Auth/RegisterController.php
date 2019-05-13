@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\PassGenerateRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use App\Business\Password\Generator;
+use App\Business\Password\PasswordGenerator;
+use Illuminate\View\View;
 
 class RegisterController extends Controller
 {
@@ -74,6 +76,28 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         //
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return View
+     */
+    public function showRegistrationForm(): View
+    {
+        return view('auth.register')->with(['password' => null, 'passwordLength' => null]);
+    }
+
+    /**
+     * @param RassGenerateRequest $request
+     *
+     * @return View
+     */
+    public function generatePassword(PassGenerateRequest $request): View
+    {
+        $password = PasswordGenerator::getPassword($request);
+        $passwordLength = $request->password_length;
+        return view('auth.register', compact('password', 'passwordLength'));
     }
 
 }
