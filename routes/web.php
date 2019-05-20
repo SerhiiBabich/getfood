@@ -11,20 +11,17 @@
 |
 */
 
-// Route to set the language
-Route::get('setlocale/{lang}', 'Business\Location\SetLocale@setLocale')->name('setlocale');
-
-// The route for the main page without installing language
-Route::get('/', function () {
-    return redirect('/'. config('app.locale'));
-});
-
 /*
 |------------------------------
 | Routes with localization
 |------------------------------
 */
-Route::group(['prefix' => \App\Http\Controllers\Business\Location\GetLocale::getLocale()], function (){
+Route::group(
+    [
+        'prefix'     => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
+    ],
+    function (){
 
     Route::get('/', function () {
         return view('welcome');

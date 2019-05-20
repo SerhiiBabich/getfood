@@ -100,8 +100,11 @@
             </div>
         </div>
             <div class="links bottom-right">
-                <a href="<?= route('setlocale', ['lang' => 'en']) ?>" role="button">En</a>
-                <a href="<?= route('setlocale', ['lang' => 'ru']) ?>" role="button">Ru</a>
+                    @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <a rel="alternate" hreflang="{{ $localeCode }}" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}" role="button">
+                                {{ $properties['native'] }}
+                            </a>
+                    @endforeach
             </div>
     </body>
 </html>
