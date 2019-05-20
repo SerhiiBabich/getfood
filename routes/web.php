@@ -20,6 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'profile', 'namespace' => 'User'], function () {
-    Route::get('/', 'ProfileController@showEditProfileForm')->name('profile');
-    Route::post('/', 'ProfileController@editPrifile')->name('edit_profile');
+    Route::get('/', 'ProfileController@show')->name('profile.show');
+    Route::post('/', 'ProfileController@edit')->name('profile.edit');
 });

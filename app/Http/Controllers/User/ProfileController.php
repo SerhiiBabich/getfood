@@ -3,32 +3,36 @@ declare(strict_types = 1);
 
 namespace App\Http\Controllers\User;
 
+use App\Constants\Messages;
 use App\Http\Requests\ProfileRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Repositories\UserRepository;
 
 class ProfileController extends Controller
 {
     /**
-     * @return View
+     * @return \Illuminate\View\View
      */
-    public function showEditProfileForm(): View
+    public function show(): View
     {
         return view('user.index');
     }
 
     /**
-     * @param ProfileRequest $request
+     * @param \App\Http\Requests\ProfileRequest $request
      *
-     * @return RedirectResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function editPrifile(ProfileRequest $request): RedirectResponse
+    public function edit(ProfileRequest $request): RedirectResponse
     {
-        $user = Auth::user();
-        $user->update(['name' => $request->name, 'surname' => $request->surname])
+        $userRepository = UserRepository::currentUser();
+        $userRepository->update([
+            'name' => $request->name,
+            'surname' => $request->surname
+        ]);
 
-        return redirect()->back()->with('message', 'User data successfully updated');
+        return redirect()->back()->with(Messages::MESSAGE, trans('message.profile'));
     }
 }

@@ -9,7 +9,7 @@
                 <div class="card-header">{{ __('Edit Profile') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('edit_profile') }}">
+                    <form method="POST" action="{{ route('profile.edit') }}">
                         @csrf
                         @if($errors->any())
                             <div class="container">
