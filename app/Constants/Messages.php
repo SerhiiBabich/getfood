@@ -5,5 +5,5 @@ namespace App\Constants;
 
 class Messages
 {
-    const MESSAGE = 'message';
+    public const MESSAGE = 'message';
 }
