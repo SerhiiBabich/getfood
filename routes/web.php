@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['prefix' => 'profile', 'namespace' => 'User'], function () {
+    Route::get('/', 'ProfileController@show')->name('profile.show');
+    Route::post('/', 'ProfileController@edit')->name('profile.edit');
+});
