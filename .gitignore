@@ -9,5 +9,10 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+*.iml
+*.xml
 .idea/
+.gitignore_global
+.gitattributes
+/composer.phar
 
