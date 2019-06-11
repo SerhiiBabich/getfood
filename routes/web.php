@@ -17,4 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::group(['prefix'=> '/profile', 'middleware'=> 'auth'], function ()
+{
+    Route::get('/edit/email', 'Email\EditEmailController@index');
+    Route::post('/edit/email', 'Email\EditEmailController@edit');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
