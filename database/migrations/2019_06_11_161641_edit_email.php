@@ -16,7 +16,6 @@ class EditEmail extends Migration
         Schema::create('edit_email', function (Blueprint $table) {
             $table->string('token')->index();
             $table->string('email');
-            $table->timestamp('created_at')->nullable();
         });
     }
 
