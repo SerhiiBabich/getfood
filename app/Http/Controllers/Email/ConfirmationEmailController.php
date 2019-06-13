@@ -12,25 +12,30 @@ class ConfirmationEmailController extends Controller
 {
     public function confirm(Request $request, $token): RedirectResponse
     {
-        $email = EditEmail::where('token', $token)->first();
+        $EditEmail = EditEmail::where('token', $token)->first();
         //check if there is such a token
-        if($email === null)
+        if($EditEmail === null)
         {
             abort(404);
         }
+        if($EditEmail->used_token == 1)
+        {
+            return redirect()->route('edit.email')->withErrors(['msg' => trans('edit_email.link_used')]);
+        }
+        
         //update email
         $user = $request->user();
-        $user->email = $email->email;
-        $user->email_verified_at = time();
-        $save = $user->save();
+        $saveUser = $user->emailConfirm($EditEmail->email);
 
-        if($save)
+        if($saveUser)
         {
+            //use token to not reuse
+            $EditEmail->usedToken();
             return redirect()->route('home')
-                ->with(['status' => 'Почта успешно подтверджена']);
+                ->with(['status' => trans('edit_email.mail_verified')]);
         }
         else{
-            return redirect()->route('edit.email')->withErrors(['msg' => 'Ошибка подтверджения']);
+            return redirect()->route('edit.email')->withErrors(['msg' => trans('edit_email.verification_error')]);
         }
     }
 }

@@ -20,7 +20,7 @@ Auth::routes();
 Route::group(['prefix'=> '/profile', 'middleware'=> 'auth'], function ()
 {
     Route::get('/edit/email', 'Email\EditEmailController@index')->name('edit.email');
-    Route::post('/edit/email', 'Email\EditEmailController@edit')->name('edit.email');
+    Route::post('/edit/email', 'Email\EditEmailController@create')->name('edit.email');
 });
 
 // confirmation email

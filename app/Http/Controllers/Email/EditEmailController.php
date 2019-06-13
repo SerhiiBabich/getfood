@@ -13,6 +13,8 @@ use Illuminate\Support\Str;
 
 class EditEmailController extends Controller
 {
+    protected $token;
+
     public function index()
     {
         return view('email.edit_email');
@@ -23,23 +25,21 @@ class EditEmailController extends Controller
      * @return \Illuminate\Http\Response
      *
      */
-    public function edit(EditEmailRequest $request): RedirectResponse
+    public function create(EditEmailRequest $request): RedirectResponse
     {
         $data = new EditEmail;
-        $data->email = $request->email;
-        $data->token = $this->setToken(30);
-
         // save token and email
-        $save = $data->save();
+        $save = $data->saveEmailAndToken($request->email, $this->setToken(30));
 
         if($save){
             // We send the link with the token to the mail
-            Mail::to($data->email)->send(new ConfirmEditEmail($data->token));
+            $this->sendConfirmation($request->email, $this->token);
+            
             return redirect()->route('edit.email')
-                ->with(['success' => 'На вашу почту отправленно подтверджение']);
+                ->with(['success' => trans('edit_email.sent')]);
         }
         else{
-            return back()->withErrors(['msg' => 'Ошибка подтверджения'])
+            return back()->withErrors(['msg' => trans('edit_email.verification_error')])
                 ->withInput();
         }
     }
@@ -47,6 +47,12 @@ class EditEmailController extends Controller
     // creates a token
     private function setToken($int): string
     {
-        return Str::random($int);
+        return $this->token = Str::random($int);
+    }
+    
+    
+    protected function sendConfirmation($email, $token): void
+    {
+        Mail::to($email)->send(new ConfirmEditEmail($token));
     }
 }

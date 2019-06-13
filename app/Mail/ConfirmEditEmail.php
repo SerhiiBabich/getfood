@@ -32,6 +32,6 @@ class ConfirmEditEmail extends Mailable
         return $this->view('email.confirmation_email')
             ->with([
                 'token' => $this->token,
-            ])->subject('Подтверджения');
+            ])->subject(trans('edit_email.confirmations'));
     }
 }

@@ -7,7 +7,7 @@
                 </button>
                 <ul>
                     @foreach ($errors->all() as $errorTxt)
-                           <li>{{ $errorTxt }}</li>
+                           <li style="list-style-type: none;">{{ $errorTxt }}</li>
                     @endforeach
                 </ul>
             </div>

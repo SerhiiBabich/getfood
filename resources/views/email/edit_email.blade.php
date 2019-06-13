@@ -17,7 +17,7 @@
                                    class="form-control"
                                    required>
                         </div>
-                    <button type="submit" class="btn btn-primary">Изменить</button>
+                    <button type="submit" class="btn btn-primary">{{ __('edit_email.submit') }}</button>
                 </div>
             </div>
         </form>

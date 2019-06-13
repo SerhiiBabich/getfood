@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -46,5 +48,13 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function emailConfirm(string $email): bool
+    {
+        $this->email = $email;
+        $this->email_verified_at =  Carbon::now();
+
+        return $this->save();
     }
 }
