@@ -11,6 +11,8 @@ class EditEmail extends Model
     const USED_TOKEN = 1;
 
     public $timestamps = false;
+
+    protected $dates = ['token_created_at'];
     
     protected $table = 'edit_email';
 
@@ -30,9 +32,9 @@ class EditEmail extends Model
         return $this->save();
     }
 
-    public function usedToken(): bool
+    public function usedToken(int $USED_TOKEN = self::USED_TOKEN): bool
     {
-        $this->used_token = self::USED_TOKEN;
+        $this->used_token = $USED_TOKEN;
 
         return $this->save();
     }

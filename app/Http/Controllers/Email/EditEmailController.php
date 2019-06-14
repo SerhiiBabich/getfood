@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 class EditEmailController extends Controller
 {
-    protected $token;
+    private $token;
 
     public function index()
     {
@@ -45,13 +45,13 @@ class EditEmailController extends Controller
     }
 
     // creates a token
-    private function setToken($int): string
+    private function setToken(int $int): string
     {
         return $this->token = Str::random($int);
     }
     
     
-    protected function sendConfirmation($email, $token): void
+    protected function sendConfirmation(string $email, string $token): void
     {
         Mail::to($email)->send(new ConfirmEditEmail($token));
     }
