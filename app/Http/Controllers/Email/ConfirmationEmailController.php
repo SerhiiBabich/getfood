@@ -4,16 +4,18 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Email;
 
 use App\Models\EditEmail;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ConfirmationEmailController extends Controller
 {
-    public function confirm(Request $request, string $token): RedirectResponse
+    public function confirm(string $token): RedirectResponse
     {
         /** @var EditEmail $EditEmail */
+        /** @var User $user */
         $EditEmail = EditEmail::where('token', $token)->first();
         //check if there is such a token
         if ($EditEmail === null)
@@ -31,11 +33,11 @@ class ConfirmationEmailController extends Controller
         {
             //set the token in the time of the token has expired and redirect to the email editing page
             $EditEmail->usedToken(2);
-            return redirect()->route('edit.email')->withErrors(['msg' => trans('edit_email.time_token')]);
+            return $this->checksToken($EditEmail->used_token);
         }
 
         //update email
-        $user = $request->user();
+        $user = Auth::user();
         $saveUser = $user->emailConfirm($EditEmail->email);
 
         if($saveUser)

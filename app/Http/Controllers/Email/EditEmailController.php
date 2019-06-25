@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Email;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EditEmailRequest;
+use App\Http\Requests\CreateEmailRequest;
 use App\Models\EditEmail;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmEditEmail;
@@ -21,11 +21,11 @@ class EditEmailController extends Controller
     }
 
     /**
-     * @param EditEmailRequest $request
+     * @param CreateEmailRequest $request
      * @return \Illuminate\Http\Response
      *
      */
-    public function create(EditEmailRequest $request): RedirectResponse
+    public function create(CreateEmailRequest $request): RedirectResponse
     {
         $data = new EditEmail;
         // save token and email

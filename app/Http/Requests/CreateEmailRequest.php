@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class EditEmailRequest extends FormRequest
+class CreateEmailRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class EditEmailRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|indisposable',
+            'email' => 'required|email|unique:users,email|indisposable',
         ];
     }
 }
