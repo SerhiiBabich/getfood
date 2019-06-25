@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Email;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateEmailRequest;
-use App\Models\EditEmail;
-use Illuminate\Support\Facades\Mail;
 use App\Mail\ConfirmEditEmail;
+use App\Models\EditEmail;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class EditEmailController extends Controller
@@ -21,7 +21,7 @@ class EditEmailController extends Controller
     }
 
     /**
-     * @param CreateEmailRequest $request
+     * @param  CreateEmailRequest  $request
      * @return \Illuminate\Http\Response
      *
      */
@@ -31,14 +31,13 @@ class EditEmailController extends Controller
         // save token and email
         $save = $data->saveEmailAndToken($request->email, $this->setToken(30));
 
-        if($save){
+        if ($save) {
             // We send the link with the token to the mail
             $this->sendConfirmation($request->email, $this->token);
-            
+
             return redirect()->route('edit.email')
                 ->with(['success' => trans('edit_email.sent')]);
-        }
-        else{
+        } else {
             return back()->withErrors(['msg' => trans('edit_email.verification_error')])
                 ->withInput();
         }
@@ -49,8 +48,8 @@ class EditEmailController extends Controller
     {
         return $this->token = Str::random($int);
     }
-    
-    
+
+
     protected function sendConfirmation(string $email, string $token): void
     {
         Mail::to($email)->send(new ConfirmEditEmail($token));

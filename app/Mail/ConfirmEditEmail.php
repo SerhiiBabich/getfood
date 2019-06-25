@@ -1,17 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ConfirmEditEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    
+
     protected $token;
+
     /**
      * Create a new message instance.
      *

@@ -4,10 +4,9 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -41,7 +40,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * @param string $password
+     * @param  string  $password
      *
      * @return void
      */
@@ -52,8 +51,8 @@ class User extends Authenticatable
 
     public function emailConfirm(string $email): bool
     {
-        $this->email = $email;
-        $this->email_verified_at =  Carbon::now();
+        $this->email             = $email;
+        $this->email_verified_at = Carbon::now();
 
         return $this->save();
     }

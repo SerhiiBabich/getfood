@@ -13,7 +13,7 @@ class EditEmail extends Model
     public $timestamps = false;
 
     protected $dates = ['token_created_at'];
-    
+
     protected $table = 'edit_email';
 
     protected $fillable =
@@ -25,8 +25,8 @@ class EditEmail extends Model
 
     public function saveEmailAndToken(string $email, string $token): bool
     {
-        $this->email = $email;
-        $this->token = $token;
+        $this->email            = $email;
+        $this->token            = $token;
         $this->token_created_at = Carbon::now();
 
         return $this->save();
