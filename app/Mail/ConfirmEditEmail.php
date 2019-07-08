@@ -4,14 +4,15 @@ declare(strict_types=1);
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmEditEmail extends Mailable
+class ConfirmEditEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    protected $token;
+    public $token;
 
     /**
      * Create a new message instance.
@@ -30,9 +31,6 @@ class ConfirmEditEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.confirmation_email')
-            ->with([
-                'token' => $this->token,
-            ])->subject(trans('edit_email.confirmations'));
+        return $this->view('email.confirmation_message_email')->subject(trans('edit_email.confirmations'));
     }
 }

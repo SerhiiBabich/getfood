@@ -20,11 +20,6 @@ class EditEmailController extends Controller
         return view('email.edit_email');
     }
 
-    /**
-     * @param  CreateEmailRequest  $request
-     * @return \Illuminate\Http\Response
-     *
-     */
     public function create(CreateEmailRequest $request): RedirectResponse
     {
         $data = new EditEmail;
@@ -43,14 +38,20 @@ class EditEmailController extends Controller
         }
     }
 
-    // creates a token
+    /** Creates a token
+     * @param  int  $int
+     * @return string
+     */
     private function setToken(int $int): string
     {
         return $this->token = Str::random($int);
     }
 
-
-    protected function sendConfirmation(string $email, string $token): void
+    /** Sends a confirmation message with a token
+     * @param  string  $email
+     * @param  string  $token
+     */
+    private function sendConfirmation(string $email, string $token): void
     {
         Mail::to($email)->send(new ConfirmEditEmail($token));
     }

@@ -6,6 +6,9 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin \Illuminate\Database\Eloquent\Builder
+ */
 class EditEmail extends Model
 {
     const USED_TOKEN = 1;
@@ -15,13 +18,11 @@ class EditEmail extends Model
     protected $dates = ['token_created_at'];
 
     protected $table = 'edit_email';
-
-    protected $fillable =
-        [
-            'email',
-            'token',
-        ];
-
+    
+    public static function whereToken(string $token): EditEmail
+    {
+        return EditEmail::where('token', '=', $token)->firstOrFail();
+    }
 
     public function saveEmailAndToken(string $email, string $token): bool
     {
