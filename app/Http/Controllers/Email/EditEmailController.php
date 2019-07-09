@@ -42,7 +42,7 @@ class EditEmailController extends Controller
      * @param  int  $int
      * @return string
      */
-    private function setToken(int $int): string
+    public function setToken(int $int): string
     {
         return $this->token = Str::random($int);
     }

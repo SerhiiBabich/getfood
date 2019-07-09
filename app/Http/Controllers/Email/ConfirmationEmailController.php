@@ -26,7 +26,7 @@ class ConfirmationEmailController extends Controller
         if ($isValidToken = $this->isTokenValid($this->EditEmail->used_token, $this->EditEmail->token_created_at)) {
             return $isValidToken;
         }
-        
+
         // Update user email and time confirmation
         if ($this->confirmEmail($this->EditEmail->email)) {
             //use a token to not reuse
@@ -66,10 +66,10 @@ class ConfirmationEmailController extends Controller
     {
         $message = '';
         //already used a token
-        if ((int) $used_token == 1) {
+        if ((int)$used_token == 1) {
             $message = __('edit_email.link_used');
         } // the time of the token has expired
-        elseif ((int) $used_token == 2) {
+        elseif ((int)$used_token == 2) {
             $message = __('edit_email.time_token');
         }
         return redirect()->route('edit.email')->withErrors(['msg' => $message]);
@@ -84,9 +84,9 @@ class ConfirmationEmailController extends Controller
         if (empty($time)) {
             return false;
         }
-        if($time instanceof Carbon) {
+        if ($time instanceof Carbon) {
             return $time->addMinutes(Config::get('app.time_token'))->lt(Carbon::now());
-        }else{
+        } else {
             return Carbon::parse($time)->addMinutes(Config::get('app.time_token'))->lt(Carbon::now());
         }
     }
