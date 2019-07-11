@@ -71,6 +71,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Valid token email confirmation to change email
+    |--------------------------------------------------------------------------
+    |
+    | The time of the token is used to change the email and confirm it.
+    | Set in minutes.
+    | You can use arithmetic operators to change the time.
+    | Example: 60 * 24 will increase the time by 1 day.
+    | Default value: 60 minutes
+    */
+    
+    'time_token' => 60,
+    
+    /*
+    |--------------------------------------------------------------------------
     | Application Locale Configuration
     |--------------------------------------------------------------------------
     |
