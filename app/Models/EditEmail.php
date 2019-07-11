@@ -14,14 +14,14 @@ class EditEmail extends Model
     const USED_TOKEN = 1;
 
     public $timestamps = false;
-
+    
     protected $dates = ['token_created_at'];
 
     protected $table = 'edit_email';
-    
+
     public static function whereToken(string $token): EditEmail
     {
-        return EditEmail::where('token', '=', $token)->firstOrFail();
+        return EditEmail::where('token','=', $token)->firstOrFail();
     }
 
     public function saveEmailAndToken(string $email, string $token): bool
@@ -36,7 +36,7 @@ class EditEmail extends Model
     public function usedToken(int $USED_TOKEN = self::USED_TOKEN): bool
     {
         $this->used_token = $USED_TOKEN;
-
+        
         return $this->save();
     }
 }

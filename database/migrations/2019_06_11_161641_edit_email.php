@@ -15,7 +15,7 @@ class EditEmail extends Migration
     {
         Schema::create('edit_email', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('token')->index();
+            $table->string('token')->unique()->index();
             $table->string('email');
             $table->integer('used_token')->default(0);
             $table->timestamp('token_created_at');

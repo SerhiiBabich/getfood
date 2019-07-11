@@ -51,8 +51,8 @@ class EditEmailController extends Controller
      * @param  string  $email
      * @param  string  $token
      */
-    private function sendConfirmation(string $email, string $token): void
+    public function sendConfirmation(string $email, string $token): void
     {
-        Mail::to($email)->send(new ConfirmEditEmail($token));
+        Mail::to($email)->queue((new ConfirmEditEmail($token))->onQueue('email'));
     }
 }

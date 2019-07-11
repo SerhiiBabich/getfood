@@ -44,7 +44,7 @@ class ConfirmationEmailController extends Controller
      * @param  Carbon|null  $token_created_at
      * @return bool|RedirectResponse
      */
-    private function isTokenValid(int $used_token, Carbon $token_created_at = null)
+    public function isTokenValid(int $used_token, Carbon $token_created_at = null)
     {
         if ($used_token == 1 || $used_token == 2) {
             //redirect depending on token usage
@@ -62,7 +62,7 @@ class ConfirmationEmailController extends Controller
      * @param  int  used_token
      * @return RedirectResponse
      */
-    private function isUsedToken(int $used_token): RedirectResponse
+    protected function isUsedToken(int $used_token): RedirectResponse
     {
         $message = '';
         //already used a token
@@ -79,7 +79,7 @@ class ConfirmationEmailController extends Controller
      * @param  Carbon|string  $time
      * @return bool
      */
-    private function timeToken($time): bool
+    public function timeToken($time): bool
     {
         if (empty($time)) {
             return false;
@@ -93,12 +93,16 @@ class ConfirmationEmailController extends Controller
 
     /** Updates user email and confirmation time
      * @param  string  $email
+     * @param  User  $user
      * @return bool
      */
-    private function confirmEmail(string $email): bool
+    public function confirmEmail(string $email, User $user = null): bool
     {
         /** @var User $user */
-        $user = Auth::user();
+        if (empty($user)) {
+            $user = Auth::user();
+        }
+
         return $user->emailConfirm($email);
     }
 }
